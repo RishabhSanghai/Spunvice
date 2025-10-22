@@ -1,0 +1,17 @@
+{
+  "frontendFolder": "C:/Users/oflqw/Downloads/APP/Project/./src/main/frontend",
+  "themeFolder": "themes",
+  "themeResourceFolder": "C:/Users/oflqw/Downloads/APP/Project/./src/main/frontend/generated/jar-resources",
+  "staticOutput": "C:/Users/oflqw/Downloads/APP/Project/target/classes/META-INF/VAADIN/webapp/VAADIN/static",
+  "generatedFolder": "generated",
+  "statsOutput": "C:\\Users\\oflqw\\Downloads\\APP\\Project\\target\\classes\\META-INF\\VAADIN\\config",
+  "frontendBundleOutput": "C:\\Users\\oflqw\\Downloads\\APP\\Project\\target\\classes\\META-INF\\VAADIN\\webapp",
+  "devBundleOutput": "C:/Users/oflqw/Downloads/APP/Project/target/dev-bundle/webapp",
+  "devBundleStatsOutput": "C:/Users/oflqw/Downloads/APP/Project/target/dev-bundle/config",
+  "jarResourcesFolder": "C:/Users/oflqw/Downloads/APP/Project/./src/main/frontend/generated/jar-resources",
+  "themeName": "my-app-theme",
+  "clientServiceWorkerSource": "C:\\Users\\oflqw\\Downloads\\APP\\Project\\target\\sw.ts",
+  "pwaEnabled": true,
+  "offlineEnabled": true,
+  "offlinePath": "'.'"
+}

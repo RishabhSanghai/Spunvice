@@ -1,0 +1,4 @@
+{
+  "lumo-imports": ["dark", "utility"],
+  "imports": ["styles.css"]
+}

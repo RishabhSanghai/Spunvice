@@ -1,0 +1,1515 @@
+/* --- PROJECT AURORA V3.1 (FINAL DARK THEME) + DEVELOPER DASHBOARD FIXED --- */
+
+@import url("@vaadin/vaadin-lumo-styles/utility.css");
+
+/* --- KEYFRAME ANIMATIONS --- */
+@keyframes aurora-glow {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.2);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(1.5);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(1.2);
+  }
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- :ROOT DEFINITIONS (THEME PALETTE) --- */
+:root {
+  --gradient-start: #3a1c71;
+  --gradient-mid: #9b2a72;
+  --gradient-end: #009fff;
+  --accent-color: #4cffde;
+  --glow-color: rgba(76, 255, 222, 0.5);
+  --text-primary: #e6e6e6;
+  --text-secondary: #a0aec0;
+  --bg-color: #0d1117;
+  --bg-secondary: #161b22;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(22, 27, 34, 0.5);
+  --glass-blur: 12px;
+  --glass-border: 1px solid var(--border-color);
+}
+
+/* --- GLOBAL STYLES --- */
+html {
+  overflow: hidden;
+}
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 120vmax;
+  height: 120vmax;
+  background-image: radial-gradient(
+    circle,
+    var(--gradient-start) 0%,
+    var(--gradient-mid) 30%,
+    transparent 60%
+  );
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  animation: aurora-glow 40s linear infinite;
+  opacity: 0.3;
+}
+body::after {
+  background-image: radial-gradient(
+    circle,
+    var(--gradient-end) 0%,
+    var(--gradient-mid) 30%,
+    transparent 60%
+  );
+  animation-duration: 45s;
+  animation-direction: reverse;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color);
+  border-radius: 20px;
+  border: 2px solid var(--bg-color);
+}
+
+/* --- MAIN LAYOUT & COMPONENTS --- */
+.main-view {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content-wrapper {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+.header {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: var(--glass-border);
+  padding: 0 2rem;
+  height: 64px;
+  flex-shrink: 0;
+}
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #fff, var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header-logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.75rem;
+}
+.header .nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+.header .nav-links a:hover {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+}
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+.hero-section {
+  text-align: center;
+  padding: 3rem 1rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: var(--glass-border);
+}
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.app-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: 12px;
+  border: var(--glass-border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 0px var(--glow-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  opacity: 0;
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+.app-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 0 20px var(--glow-color);
+  border-color: var(--accent-color);
+}
+.app-card-header img {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  margin-right: 1rem;
+}
+.app-card-description {
+  color: var(--text-secondary);
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+.app-card .install-button {
+  cursor: pointer;
+  background: var(--accent-color);
+  color: #000;
+  font-weight: bold;
+}
+.sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-left: var(--glass-border);
+  padding: 2rem;
+  overflow-y: auto;
+}
+.sidebar .sidebar-section {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.sidebar .sidebar-section:last-child {
+  border-bottom: none;
+}
+.sidebar h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+.pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.category-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+.category-pill:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #000;
+}
+.app-of-the-day {
+  background: linear-gradient(
+    45deg,
+    var(--gradient-mid),
+    var(--gradient-start)
+  );
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.app-of-the-day:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+.stat-bar {
+  width: 100%;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+.stat-bar .free-portion {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: 4px;
+}
+.logout-button {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+.logout-button:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+/* --- VIEW: LOGIN & DEV PORTAL FORMS --- */
+.login-form-container,
+.form-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border-radius: 12px;
+  border: var(--glass-border);
+  padding: 2rem 3rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.form-panel {
+  max-width: 800px;
+  margin-top: 3rem;
+}
+.login-form-container h1,
+.form-panel h2 {
+  text-align: center;
+}
+.login-form-container h3 {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.login-form-container input:-webkit-autofill,
+.login-form-container input:-webkit-autofill:hover,
+.login-form-container input:-webkit-autofill:focus,
+.login-form-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 40px var(--bg-secondary) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  caret-color: var(--accent-color) !important;
+}
+
+/* --- GLOBAL TYPOGRAPHY --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.header h1 {
+  background: linear-gradient(90deg, #fff, var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* This rule sets a brighter color for the labels on all form fields */
+vaadin-text-field,
+vaadin-password-field,
+vaadin-text-area,
+vaadin-select,
+vaadin-radio-group,
+vaadin-upload {
+  --lumo-secondary-text-color: var(--text-secondary);
+}
+
+/* This fixes the color of standard button text, like 'Submit' and 'Upload File' */
+vaadin-button {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* --- SIDEBAR COMPONENT READABILITY FIX (V2) --- */
+
+/* Fixes labels for dropdowns and radio buttons (e.g., "Price", "All Categories") */
+.sidebar vaadin-select::part(label),
+.sidebar vaadin-radio-group::part(label) {
+  color: var(--text-secondary);
+}
+
+/* --- THIS IS THE NEW, MORE POWERFUL FIX --- */
+/* This rule uses Vaadin's theme variable to set the text color */
+/* for the value inside the dropdown box (e.g., "Productivity") */
+.sidebar vaadin-select {
+  --vaadin-input-field-value-color: var(--text-primary);
+}
+
+/* This makes the text for unselected radio options readable */
+.sidebar vaadin-radio-button {
+  color: var(--text-secondary);
+}
+
+/* This makes the text for the SELECTED radio option bright white */
+.sidebar vaadin-radio-button[selected] {
+  color: var(--text-primary);
+}
+
+/* --- GLOBAL INPUT TEXT COLOR FIX --- */
+
+/* Technique 1: Set Vaadin's official theme property for the input's text color */
+vaadin-text-field,
+vaadin-password-field,
+vaadin-text-area {
+  --vaadin-input-field-value-color: var(--text-primary) !important;
+}
+
+/* Technique 2: A highly specific selector for the value part (for good measure) */
+[part="value"] {
+  color: var(--text-primary) !important;
+}
+
+/* Technique 3: The powerful override for browser autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 40px var(--bg-secondary) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  caret-color: var(--accent-color) !important;
+}
+
+/* --- APP CARD FOOTER STYLES --- */
+.app-card-footer {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.app-card-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.app-card-rating {
+  display: flex;
+  align-items: center;
+  color: #ffc107;
+  margin: 1rem 0;
+}
+
+/* --- RATING FILTER STYLES --- */
+.rating-filter-item {
+  padding: 0.6rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  color: var(--text-secondary);
+}
+.rating-filter-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+.rating-filter-item.active {
+  background-color: var(--accent-color);
+  color: #000;
+  font-weight: 600;
+}
+
+/* --- DEVELOPER DASHBOARD (LIGHT THEME) STYLES - FIXED --- */
+.dev-portal-view {
+  background: #f4f7f9;
+  color: #333;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Fix for all text elements in developer dashboard */
+.dev-portal-view,
+.dev-portal-view * {
+  color: #333 !important;
+}
+
+/* Fix for Vaadin text fields in developer dashboard */
+.dev-portal-view vaadin-text-field,
+.dev-portal-view vaadin-text-area,
+.dev-portal-view vaadin-number-field,
+.dev-portal-view vaadin-date-picker,
+.dev-portal-view vaadin-select {
+  --vaadin-input-field-value-color: #333 !important;
+  --lumo-secondary-text-color: #666 !important;
+  --lumo-body-text-color: #333 !important;
+}
+
+/* Fix for input text visibility */
+.dev-portal-view [part="value"],
+.dev-portal-view [part="input-field"],
+.dev-portal-view [part="label"] {
+  color: #333 !important;
+}
+
+/* Fix for placeholder text */
+.dev-portal-view ::placeholder {
+  color: #999 !important;
+}
+
+/* Fix for form labels and text */
+.dev-portal-view .dashboard-title,
+.dev-portal-view .dashboard-tabs,
+.dev-portal-view .dashboard-content {
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+.dev-portal-view .dashboard-title {
+  padding: 1.5rem 2rem 1rem 2rem;
+  margin: 0;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.dev-portal-view .dashboard-tabs {
+  padding: 0 1rem;
+  box-shadow: inset 0 -1px 0 #e5e5e5;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 1200px;
+}
+.dev-portal-view .dashboard-content {
+  padding: 2rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.dashboard-content > div {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Tab styling */
+.dashboard-tabs vaadin-tab {
+  color: #666 !important;
+  font-weight: 500;
+}
+.dashboard-tabs vaadin-tab[selected] {
+  color: #fa5c5c !important;
+  font-weight: 600;
+}
+
+/* Analytics Tab */
+.analytics-tab {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.analytics-filters {
+  gap: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background-color: #fafafa;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Earnings Tab - Fixed text visibility */
+.balance-display {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+  color: #333 !important;
+}
+.balance-display * {
+  color: #333 !important;
+}
+.balance-display .payout-button {
+  background-color: #333 !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* Promotions Tab - Fixed form visibility */
+.promotion-form {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  width: 100%;
+}
+.promotion-form * {
+  color: #333 !important;
+}
+.promotions-tab vaadin-button {
+  background-color: #fa5c5c !important;
+  color: white !important;
+}
+
+/* Posts Tab - Fixed form visibility */
+.post-editor {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  width: 100%;
+}
+.post-editor * {
+  color: #333 !important;
+}
+.posts-tab vaadin-button,
+.post-editor vaadin-button[theme~="primary"] {
+  background-color: #2196f3 !important;
+  color: white !important;
+}
+
+/* Projects Tab - Fixed form visibility */
+.projects-tab {
+  width: 100%;
+}
+.submission-form {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  width: 100%;
+}
+.submission-form * {
+  color: #333 !important;
+}
+
+/* Chart components */
+.chart-wrapper {
+  padding: 1.5rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background-color: #ffffff;
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 300px;
+}
+.chart-wrapper h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-weight: 600;
+}
+.chart-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-image: linear-gradient(to right, #eee 1px, transparent 1px),
+    linear-gradient(to bottom, #eee 1px, transparent 1px);
+  background-size: 100% 20%;
+  flex-grow: 1;
+}
+.chart-line {
+  fill: none;
+  stroke: #fa5c5c;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+.data-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #fa5c5c;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, 50%);
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+.data-point:hover {
+  transform: translate(-50%, 50%) scale(1.5);
+}
+.y-axis {
+  width: 40px;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: #666;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+.x-axis {
+  width: 100%;
+  font-size: 0.8rem;
+  color: #666;
+  padding-left: 40px;
+  box-sizing: border-box;
+  height: 20px;
+}
+
+/* Table styles for earnings */
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.transactions-table th,
+.transactions-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e5e5;
+  color: #333 !important;
+}
+.transactions-table th {
+  font-weight: 600;
+  background-color: #fafafa;
+}
+
+/* Button styles */
+.dev-portal-view vaadin-button {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* --- DEVELOPER DASHBOARD DIALOG & OVERLAY FIXES --- */
+
+/* Fix for dialog overlays in developer portal */
+.dev-portal-view ~ vaadin-dialog-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Fix for dialog content - this targets the actual popup */
+.dev-portal-view ~ vaadin-dialog-overlay [part="overlay"] {
+  background: #ffffff !important;
+  color: #333 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Fix all text inside dialogs */
+.dev-portal-view ~ vaadin-dialog-overlay * {
+  color: #333 !important;
+}
+
+/* Fix for form fields inside dialogs */
+.dev-portal-view ~ vaadin-dialog-overlay vaadin-text-field,
+.dev-portal-view ~ vaadin-dialog-overlay vaadin-text-area,
+.dev-portal-view ~ vaadin-dialog-overlay vaadin-number-field,
+.dev-portal-view ~ vaadin-dialog-overlay vaadin-date-picker {
+  --vaadin-input-field-value-color: #333 !important;
+  --lumo-secondary-text-color: #666 !important;
+  --lumo-body-text-color: #333 !important;
+}
+
+/* Fix for input fields specifically */
+.dev-portal-view ~ vaadin-dialog-overlay [part="value"],
+.dev-portal-view ~ vaadin-dialog-overlay [part="input-field"],
+.dev-portal-view ~ vaadin-dialog-overlay [part="label"] {
+  color: #333 !important;
+}
+
+/* Fix for dialog headers */
+.dev-portal-view ~ vaadin-dialog-overlay h1,
+.dev-portal-view ~ vaadin-dialog-overlay h2,
+.dev-portal-view ~ vaadin-dialog-overlay h3,
+.dev-portal-view ~ vaadin-dialog-overlay h4 {
+  color: #333 !important;
+  font-weight: 600 !important;
+}
+
+/* Fix for buttons in dialogs */
+.dev-portal-view ~ vaadin-dialog-overlay vaadin-button {
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+/* Specific fix for primary buttons in dialogs */
+.dev-portal-view ~ vaadin-dialog-overlay vaadin-button[theme~="primary"] {
+  background-color: #2196f3 !important;
+  color: white !important;
+}
+
+/* Fix for secondary/cancel buttons */
+.dev-portal-view ~ vaadin-dialog-overlay vaadin-button:not([theme~="primary"]) {
+  background-color: #666 !important;
+  color: white !important;
+}
+
+/* Alternative approach: Target dialogs by their content */
+vaadin-dialog-overlay[theme~="dev-portal-dialog"] {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+vaadin-dialog-overlay[theme~="dev-portal-dialog"] [part="overlay"] {
+  background: #ffffff !important;
+  color: #333 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+vaadin-dialog-overlay[theme~="dev-portal-dialog"] * {
+  color: #333 !important;
+}
+
+/* If the above doesn't work, try this nuclear option for any dialog */
+vaadin-dialog-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+vaadin-dialog-overlay [part="overlay"] {
+  background: #ffffff !important;
+  color: #333 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+vaadin-dialog-overlay vaadin-text-field,
+vaadin-dialog-overlay vaadin-text-area,
+vaadin-dialog-overlay vaadin-number-field,
+vaadin-dialog-overlay vaadin-date-picker {
+  --vaadin-input-field-value-color: #333 !important;
+  --lumo-secondary-text-color: #666 !important;
+  --lumo-body-text-color: #333 !important;
+}
+
+vaadin-dialog-overlay [part="value"],
+vaadin-dialog-overlay [part="input-field"],
+vaadin-dialog-overlay [part="label"] {
+  color: #333 !important;
+}
+
+vaadin-dialog-overlay h1,
+vaadin-dialog-overlay h2,
+vaadin-dialog-overlay h3,
+vaadin-dialog-overlay h4 {
+  color: #333 !important;
+  font-weight: 600 !important;
+}
+
+vaadin-dialog-overlay vaadin-button[theme~="primary"] {
+  background-color: #2196f3 !important;
+  color: white !important;
+}
+
+vaadin-dialog-overlay vaadin-button:not([theme~="primary"]) {
+  background-color: #666 !important;
+  color: white !important;
+}
+
+/* --- SIMPLE LOGIN STYLES --- */
+.login-view {
+  background: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.login-title {
+  text-align: center;
+  background: linear-gradient(90deg, #fff, var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 0.5rem 0;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin: 0 0 2rem 0;
+}
+
+.login-form {
+  margin-bottom: 1.5rem;
+}
+
+.login-field {
+  --vaadin-input-field-background: rgba(255, 255, 255, 0.1);
+  --vaadin-input-field-value-color: var(--text-primary);
+}
+
+.login-button {
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.login-button:hover {
+  background: color-mix(in srgb, var(--accent-color) 80%, #000 20%);
+}
+
+.signup-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  text-align: center;
+  display: block;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+/* Auth Tabs */
+.auth-tabs {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.auth-tabs vaadin-tab {
+  color: var(--text-secondary);
+  font-weight: 500;
+  flex: 1;
+  text-align: center;
+}
+
+.auth-tabs vaadin-tab[selected] {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Register form specific styles */
+.register-form {
+  margin-bottom: 1.5rem;
+}
+
+/* --- APP DETAIL VIEW STYLES --- */
+.app-detail-view {
+  background: var(--bg-color);
+  min-height: 100vh;
+}
+
+.app-detail-header {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border-bottom: var(--glass-border);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.back-button {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.store-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.app-detail-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* App Header Section */
+.app-header {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.app-main-info {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.app-icon-section {
+  padding: 0;
+  gap: 1rem;
+}
+
+.app-detail-icon {
+  width: 128px;
+  height: 128px;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.app-info-section {
+  padding: 0;
+  gap: 0.5rem;
+  flex: 1;
+  margin: 0 2rem;
+}
+
+.app-detail-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #fff, var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-category {
+  color: var(--accent-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.rating-section {
+  padding: 0;
+  gap: 1rem;
+  align-items: center;
+}
+
+.star-rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+.star.half-filled {
+  background: linear-gradient(90deg, #ffc107 50%, var(--text-secondary) 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rating-text {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.install-section {
+  padding: 0;
+  gap: 1rem;
+  align-items: center;
+}
+
+.app-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.install-button {
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.install-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--glow-color);
+}
+
+/* Screenshots Section */
+.screenshots-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.screenshot {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: var(--glass-border);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.screenshot:hover {
+  transform: scale(1.02);
+}
+
+/* Details Section */
+.details-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.app-description {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.detail-value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Reviews Section */
+.reviews-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.reviews-list {
+  margin-bottom: 1.5rem;
+}
+
+.review {
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.reviewer {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.review-text {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+.review-date {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.reviews-button {
+  background: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reviews-button:hover {
+  background: var(--accent-color);
+  color: #000;
+}
+
+/* Installation Dialog */
+.install-dialog {
+  text-align: center;
+  padding: 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 4px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 4px;
+  width: 0%;
+  animation: progress 2s ease-in-out forwards;
+}
+
+@keyframes progress {
+  to {
+    width: 100%;
+  }
+}
+
+/* Error Layout */
+.error-layout {
+  background: var(--bg-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-main-info {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .app-info-section {
+    margin: 0;
+  }
+
+  .screenshot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .screenshot {
+    height: 400px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Enhanced App Detail Styles */
+.app-detail-content {
+  overflow-y: auto;
+  height: calc(100vh - 80px);
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Features Section */
+.features-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.features-list {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.feature-item {
+  margin-bottom: 0.5rem;
+}
+
+/* Requirements Section */
+.requirements-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.requirement-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.requirement-category {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.requirement-value {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: right;
+}
+
+/* What's New Section */
+.whats-new-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.updates-list {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.update-item {
+  margin-bottom: 0.5rem;
+}
+
+.update-date {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Enhanced Reviews Section */
+.review-summary {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.overall-rating {
+  text-align: center;
+}
+
+.overall-rating span:first-child {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  display: block;
+}
+
+.overall-rating span:last-child {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.rating-breakdown {
+  flex: 1;
+}
+
+.rating-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.star-label {
+  color: var(--text-secondary);
+  width: 30px;
+}
+
+.bar-container {
+  flex: 1;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 4px;
+}
+
+.percentage-label {
+  color: var(--text-secondary);
+  width: 40px;
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* Additional Info Section */
+.additional-info-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.info-item {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.info-item:hover {
+  border-color: var(--accent-color);
+  background: rgba(76, 255, 222, 0.1);
+}
+
+.info-title {
+  color: var(--text-primary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.info-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Enhanced Review Items */
+.review-header {
+  padding: 0;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.reviewer-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Age Rating */
+.age-rating {
+  background: var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Size Info */
+.size-info {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .review-summary {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .requirements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
