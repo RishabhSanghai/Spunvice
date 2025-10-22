@@ -1,7 +1,5 @@
 # Spunvice: The Unified App Marketplace
 
-![Spunvice Project Banner](https://via.placeholder.com/1200x400/121212/00A8FF?text=SPUNVICE)
-
 **Spunvice** is a unified, cross-platform application marketplace designed to streamline the app discovery and download experience. This project, created for the 21CSC203P Advanced Programming Practice course, reimagines the app store by amalgamating iOS and Android marketplaces into a single, seamless hub for both users and developers.
 
 ## The Problem
@@ -19,11 +17,9 @@ In the current mobile ecosystem, users are forced to navigate fragmented app sto
 
 ## Technology Stack
 
-*(You can edit this section to match your project's tech stack)*
-
 * **Backend:** Java (using technologies like Servlets, JDBC)
-* **Frontend:** HTML, CSS, JavaScript
-* **Database:** MySQL / PostgreSQL
+* **Frontend:** Java (using Maven, SpringBoot)
+* **Database:** Supabase
 * **APIs:** Java-based REST APIs
 * **Deployment:** Apache Tomcat
 
